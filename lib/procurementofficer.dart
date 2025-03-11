@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:procurelineapp/Createdepartmentpage.dart';
 
 class Procurementofficer extends StatelessWidget {
   const Procurementofficer({super.key});
@@ -38,7 +39,8 @@ class Procurementofficer extends StatelessWidget {
                           CircleAvatar(
                             radius: 40,
                             backgroundColor: Colors.grey,
-                            child: Icon(Icons.person, size: 50, color: Colors.white),
+                            child: Icon(Icons.person,
+                                size: 50, color: Colors.white),
                           ),
                           SizedBox(height: 10),
                           Text(
@@ -60,7 +62,7 @@ class Procurementofficer extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  
+
                   // Settings button
                   ElevatedButton.icon(
                     onPressed: () {},
@@ -71,9 +73,9 @@ class Procurementofficer extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 12),
                     ),
                   ),
-                  
+
                   const SizedBox(height: 10),
-                  
+
                   // Logout button
                   OutlinedButton.icon(
                     onPressed: () {},
@@ -83,12 +85,12 @@ class Procurementofficer extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 12),
                     ),
                   ),
-                  
+
                   const Spacer(),
                 ],
               ),
             ),
-            
+
             // Center section with department buttons
             Expanded(
               flex: 2,
@@ -123,7 +125,16 @@ class Procurementofficer extends StatelessWidget {
                                 topRight: Radius.circular(8),
                               ),
                               child: InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  // Navigate to Create Department page
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const Createdepartmentpage(),
+                                    ),
+                                  );
+                                },
                                 borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(8),
                                   topRight: Radius.circular(8),
@@ -132,7 +143,8 @@ class Procurementofficer extends StatelessWidget {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: const [
-                                      Icon(Icons.add_circle, color: Colors.white, size: 28),
+                                      Icon(Icons.add_circle,
+                                          color: Colors.white, size: 28),
                                       SizedBox(width: 10),
                                       Text(
                                         "Create Department",
@@ -148,7 +160,7 @@ class Procurementofficer extends StatelessWidget {
                               ),
                             ),
                           ),
-                          
+
                           // Bottom half - Manage Department
                           Expanded(
                             child: Material(
@@ -167,7 +179,8 @@ class Procurementofficer extends StatelessWidget {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: const [
-                                      Icon(Icons.edit, color: Colors.white, size: 28),
+                                      Icon(Icons.edit,
+                                          color: Colors.white, size: 28),
                                       SizedBox(width: 10),
                                       Text(
                                         "Manage Department",
@@ -186,9 +199,9 @@ class Procurementofficer extends StatelessWidget {
                         ],
                       ),
                     ),
-                    
+
                     const SizedBox(height: 20),
-                    
+
                     // Template Creator button
                     ElevatedButton.icon(
                       onPressed: () {},
@@ -198,7 +211,8 @@ class Procurementofficer extends StatelessWidget {
                         style: TextStyle(fontSize: 16),
                       ),
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 16, horizontal: 24),
                         backgroundColor: Colors.green,
                       ),
                     ),
@@ -206,7 +220,7 @@ class Procurementofficer extends StatelessWidget {
                 ),
               ),
             ),
-            
+
             // Right section with category buttons
             Expanded(
               flex: 2,
@@ -250,7 +264,8 @@ class Procurementofficer extends StatelessWidget {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: const [
-                                      Icon(Icons.add_circle, color: Colors.white, size: 28),
+                                      Icon(Icons.add_circle,
+                                          color: Colors.white, size: 28),
                                       SizedBox(width: 10),
                                       Text(
                                         "Create Category",
@@ -266,7 +281,7 @@ class Procurementofficer extends StatelessWidget {
                               ),
                             ),
                           ),
-                          
+
                           // Bottom half - Manage Category
                           Expanded(
                             child: Material(
@@ -285,7 +300,8 @@ class Procurementofficer extends StatelessWidget {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: const [
-                                      Icon(Icons.edit, color: Colors.white, size: 28),
+                                      Icon(Icons.edit,
+                                          color: Colors.white, size: 28),
                                       SizedBox(width: 10),
                                       Text(
                                         "Manage Category",
@@ -304,9 +320,9 @@ class Procurementofficer extends StatelessWidget {
                         ],
                       ),
                     ),
-                    
+
                     const SizedBox(height: 20),
-                    
+
                     // Compile button
                     ElevatedButton.icon(
                       onPressed: () {},
@@ -316,7 +332,8 @@ class Procurementofficer extends StatelessWidget {
                         style: TextStyle(fontSize: 16),
                       ),
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 16, horizontal: 24),
                         backgroundColor: Colors.red[700],
                       ),
                     ),
@@ -330,3 +347,5 @@ class Procurementofficer extends StatelessWidget {
     );
   }
 }
+
+// Create Department Page
