@@ -1,5 +1,3 @@
-Procureline app
-
 import 'package:flutter/material.dart';
 import 'package:procurelineapp/Createdepartmentpage.dart';
 
@@ -11,32 +9,48 @@ class Managedepartmentpage extends StatefulWidget {
 }
 
 class _ManagedepartmentpageState extends State<Managedepartmentpage> {
-  // Sample list of departments
+  // Sample list of departments with added fields to match new Createdepartmentpage
   final List<Map<String, dynamic>> departments = [
     {
       'name': 'Computer Science',
       'code': 'CS',
-      'head': 'Prof. John Smith',
+      'head': 'Prof. John Kinyua',
+      'description':
+          'Department focused on computer science and technology education',
+      'budget': '5000000',
+      'userInCharge': 'James Olumbe'
     },
     {
       'name': 'Engineering',
       'code': 'ENG',
-      'head': 'Dr. Emily Johnson',
+      'head': 'Dr. Emily Atieno',
+      'description': 'Department for all engineering disciplines',
+      'budget': '7500000',
+      'userInCharge': 'Sarah Kerubo'
     },
     {
       'name': 'Business Administration',
       'code': 'BUS',
-      'head': 'Prof. Michael Brown',
+      'head': 'Prof. Michael Wamalwa',
+      'description': 'Department for business studies and administration',
+      'budget': '4200000',
+      'userInCharge': 'Michael Nyangumi'
     },
     {
       'name': 'Medicine',
       'code': 'MED',
-      'head': 'Dr. Sarah Wilson',
+      'head': 'Dr. Sarah Juma',
+      'description': 'Department focused on medical education and research',
+      'budget': '9800000',
+      'userInCharge': 'Emma Nyakio'
     },
     {
       'name': 'Arts and Humanities',
       'code': 'ART',
-      'head': 'Prof. David Thompson',
+      'head': 'Prof. David Singh',
+      'description': 'Department for arts, literature and humanities',
+      'budget': '3500000',
+      'userInCharge': 'Robert Mwangi'
     },
   ];
 
@@ -155,7 +169,16 @@ class _ManagedepartmentpageState extends State<Managedepartmentpage> {
                                 icon:
                                     const Icon(Icons.edit, color: Colors.blue),
                                 onPressed: () {
-                                  // Edit department
+                                  // Navigate to edit department page and create a clone
+                                  // of the Createdepartmentpage with pre-filled values
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => EditDepartmentPage(
+                                        department: department,
+                                      ),
+                                    ),
+                                  );
                                 },
                               ),
                               IconButton(
@@ -221,22 +244,25 @@ class _ManagedepartmentpageState extends State<Managedepartmentpage> {
   }
 }
 
+// Custom widget for editing departments based on Createdepartmentpage
+class EditDepartmentPage extends StatefulWidget {
+  final Map<String, dynamic> department;
 
-import 'package:flutter/material.dart';
-
-class Createdepartmentpage extends StatefulWidget {
-  const Createdepartmentpage({super.key});
+  const EditDepartmentPage({
+    Key? key,
+    required this.department,
+  }) : super(key: key);
 
   @override
-  State<Createdepartmentpage> createState() => _CreatedepartmentpageState();
+  State<EditDepartmentPage> createState() => _EditDepartmentPageState();
 }
 
-class _CreatedepartmentpageState extends State<Createdepartmentpage> {
+class _EditDepartmentPageState extends State<EditDepartmentPage> {
   // Controllers for text fields
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _codeController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _budgetController = TextEditingController();
+  late TextEditingController _nameController;
+  late TextEditingController _codeController;
+  late TextEditingController _descriptionController;
+  late TextEditingController _budgetController;
 
   // List of dummy department users for dropdown
   final List<String> _departmentUsers = [
@@ -248,7 +274,23 @@ class _CreatedepartmentpageState extends State<Createdepartmentpage> {
     "Robert Mwangi"
   ];
 
-  String _selectedUser = "Select User";
+  late String _selectedUser;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Initialize controllers with existing department data
+    _nameController = TextEditingController(text: widget.department['name']);
+    _codeController = TextEditingController(text: widget.department['code']);
+    _descriptionController =
+        TextEditingController(text: widget.department['description']);
+    _budgetController =
+        TextEditingController(text: widget.department['budget']);
+
+    // Set the selected user from department data
+    _selectedUser = widget.department['userInCharge'];
+  }
 
   @override
   void dispose() {
@@ -264,7 +306,7 @@ class _CreatedepartmentpageState extends State<Createdepartmentpage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Create Department",
+          "Edit Department",
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
         backgroundColor: Colors.blue[700],
@@ -276,7 +318,7 @@ class _CreatedepartmentpageState extends State<Createdepartmentpage> {
               // Show help information
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text("Help information for creating departments"),
+                  content: Text("Help information for editing departments"),
                   duration: Duration(seconds: 3),
                 ),
               );
@@ -293,10 +335,10 @@ class _CreatedepartmentpageState extends State<Createdepartmentpage> {
               // Title with divider
               Row(
                 children: [
-                  const Icon(Icons.business, size: 28, color: Colors.blue),
+                  const Icon(Icons.edit_document, size: 28, color: Colors.blue),
                   const SizedBox(width: 12),
                   const Text(
-                    "Create New Department",
+                    "Edit Department",
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -438,7 +480,7 @@ class _CreatedepartmentpageState extends State<Createdepartmentpage> {
                           // Show success message
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content: Text("Department created successfully"),
+                              content: Text("Department updated successfully"),
                               backgroundColor: Colors.green,
                             ),
                           );
@@ -454,7 +496,7 @@ class _CreatedepartmentpageState extends State<Createdepartmentpage> {
                         ),
                       ),
                       child: const Text(
-                        "Create Department",
+                        "Update Department",
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),

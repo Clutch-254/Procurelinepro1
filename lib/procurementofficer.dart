@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:procurelineapp/Createdepartmentpage.dart';
+import 'package:procurelineapp/Managedepartment.dart';
 
 class Procurementofficer extends StatelessWidget {
   const Procurementofficer({super.key});
@@ -170,7 +171,16 @@ class Procurementofficer extends StatelessWidget {
                                 bottomRight: Radius.circular(8),
                               ),
                               child: InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  // Navigate to Manage Department page
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          Managedepartmentpage(),
+                                    ),
+                                  );
+                                },
                                 borderRadius: const BorderRadius.only(
                                   bottomLeft: Radius.circular(8),
                                   bottomRight: Radius.circular(8),
@@ -347,5 +357,3 @@ class Procurementofficer extends StatelessWidget {
     );
   }
 }
-
-// Create Department Page
