@@ -11,7 +11,8 @@ class _CreatecategorypageState extends State<Createcategorypage> {
   // Controllers for text fields
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  
+  final TextEditingController _budgetController = TextEditingController();
+
   // List of dummy vote members for dropdown
   final List<String> _voteMembers = [
     "Select Member",
@@ -30,6 +31,7 @@ class _CreatecategorypageState extends State<Createcategorypage> {
   void dispose() {
     _nameController.dispose();
     _descriptionController.dispose();
+    _budgetController.dispose();
     super.dispose();
   }
 
@@ -110,19 +112,32 @@ class _CreatecategorypageState extends State<Createcategorypage> {
                 icon: Icons.description,
                 maxLines: 3,
               ),
+              const SizedBox(height: 20),
+
+              // Category Budget
+              _buildTextField(
+                controller: _budgetController,
+                label: "Category Budget",
+                hint: "Enter budget amount",
+                icon: Icons.account_balance_wallet,
+                isRequired: true,
+                keyboardType: TextInputType.number,
+                prefix: "Ksh ",
+              ),
               const SizedBox(height: 28),
 
               // Vote Members Section
               _buildSectionTitle("Vote Members"),
               const SizedBox(height: 16),
-              
+
               // Vote Member Selection
               Row(
                 children: [
                   Expanded(
                     flex: 3,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 4),
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey.shade400),
                         borderRadius: BorderRadius.circular(8),
@@ -132,7 +147,8 @@ class _CreatecategorypageState extends State<Createcategorypage> {
                           value: _currentSelection,
                           isExpanded: true,
                           icon: const Icon(Icons.arrow_drop_down),
-                          style: const TextStyle(color: Colors.black87, fontSize: 16),
+                          style: const TextStyle(
+                              color: Colors.black87, fontSize: 16),
                           hint: const Text("Select Vote Member"),
                           onChanged: (String? newValue) {
                             setState(() {
@@ -162,7 +178,7 @@ class _CreatecategorypageState extends State<Createcategorypage> {
                     flex: 1,
                     child: ElevatedButton(
                       onPressed: () {
-                        if (_currentSelection != "Select Member" && 
+                        if (_currentSelection != "Select Member" &&
                             !_selectedMembers.contains(_currentSelection)) {
                           setState(() {
                             _selectedMembers.add(_currentSelection);
@@ -183,7 +199,7 @@ class _CreatecategorypageState extends State<Createcategorypage> {
                 ],
               ),
               const SizedBox(height: 20),
-              
+
               // Selected Members List
               if (_selectedMembers.isNotEmpty) ...[
                 const Text(
@@ -211,7 +227,8 @@ class _CreatecategorypageState extends State<Createcategorypage> {
                             const SizedBox(width: 12),
                             Expanded(child: Text(member)),
                             IconButton(
-                              icon: const Icon(Icons.remove_circle, color: Colors.red),
+                              icon: const Icon(Icons.remove_circle,
+                                  color: Colors.red),
                               onPressed: () {
                                 setState(() {
                                   _selectedMembers.remove(member);
@@ -351,6 +368,17 @@ class _CreatecategorypageState extends State<Createcategorypage> {
     // Check required fields
     if (_nameController.text.isEmpty) {
       _showValidationError("Category name is required");
+      return false;
+    }
+
+    if (_budgetController.text.isEmpty) {
+      _showValidationError("Category budget is required");
+      return false;
+    }
+
+    // Validate budget is a number
+    if (double.tryParse(_budgetController.text) == null) {
+      _showValidationError("Budget must be a valid number");
       return false;
     }
 

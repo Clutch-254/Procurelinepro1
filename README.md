@@ -2,363 +2,377 @@ Procureline app
 
 import 'package:flutter/material.dart';
 
-import 'package:procurelineapp/Prodcurementofficer/Createdepartmentpage.dart';
-import 'package:procurelineapp/Prodcurementofficer/Managedepartment.dart';
+class Createcategorypage extends StatefulWidget {
+  const Createcategorypage({super.key});
 
-class Procurementofficer extends StatelessWidget {
-  const Procurementofficer({super.key});
+  @override
+  State<Createcategorypage> createState() => _CreatecategorypageState();
+}
+
+class _CreatecategorypageState extends State<Createcategorypage> {
+  // Controllers for text fields
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  
+  // List of dummy vote members for dropdown
+  final List<String> _voteMembers = [
+    "Select Member",
+    "James Olumbe",
+    "Sarah Kerubo",
+    "Michael Nyangumi",
+    "Emma Nyakio",
+    "Robert Mwangi"
+  ];
+
+  // Selected members list
+  final List<String> _selectedMembers = [];
+  String _currentSelection = "Select Member";
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Procurement Officer",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 22,
-          ),
+          "Create Category",
+          style: TextStyle(fontWeight: FontWeight.w600),
         ),
-        centerTitle: true,
-        backgroundColor: Colors.blue[700],
-        elevation: 4,
+        backgroundColor: Colors.amber[700],
+        elevation: 2,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.help_outline),
+            onPressed: () {
+              // Show help information
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("Help information for creating categories"),
+                  duration: Duration(seconds: 3),
+                ),
+              );
+            },
+          ),
+        ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          children: [
-            // Left sidebar with officer name and buttons
-            Expanded(
-              flex: 1,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Title with divider
+              Row(
                 children: [
-                  // Officer name card
-                  Card(
-                    elevation: 3,
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Column(
-                        children: const [
-                          CircleAvatar(
-                            radius: 40,
-                            backgroundColor: Colors.grey,
-                            child: Icon(Icons.person,
-                                size: 50, color: Colors.white),
-                          ),
-                          SizedBox(height: 10),
-                          Text(
-                            "John Doe",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                            ),
-                          ),
-                          Text(
-                            "Senior Procurement Officer",
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ),
+                  const Icon(Icons.category, size: 28, color: Colors.amber),
+                  const SizedBox(width: 12),
+                  const Text(
+                    "Create New Category",
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
                     ),
                   ),
-                  const SizedBox(height: 20),
-
-                  // Settings button
-                  ElevatedButton.icon(
-                    onPressed: () {},
-                    icon: const Icon(Icons.settings),
-                    label: const Text("Settings"),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.purple,
-                      padding: const EdgeInsets.symmetric(vertical: 12),
+                  const Expanded(
+                    child: Divider(
+                      indent: 12,
+                      thickness: 1,
+                      color: Colors.black45,
                     ),
                   ),
-
-                  const SizedBox(height: 10),
-
-                  // Logout button
-                  OutlinedButton.icon(
-                    onPressed: () {},
-                    icon: const Icon(Icons.logout),
-                    label: const Text("Log Out"),
-                    style: OutlinedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                    ),
-                  ),
-
-                  const Spacer(),
                 ],
               ),
-            ),
+              const SizedBox(height: 28),
 
-            // Center section with department buttons
-            Expanded(
-              flex: 2,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Department management button (split in two)
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.3),
-                            spreadRadius: 1,
-                            blurRadius: 5,
-                            offset: const Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                      height: 200,
-                      width: double.infinity,
-                      child: Column(
-                        children: [
-                          // Top half - Create Department
-                          Expanded(
-                            child: Material(
-                              color: Colors.blue[600],
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(8),
-                                topRight: Radius.circular(8),
-                              ),
-                              child: InkWell(
-                                onTap: () {
-                                  // Navigate to Create Department page
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const Createdepartmentpage(),
-                                    ),
-                                  );
-                                },
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(8),
-                                  topRight: Radius.circular(8),
-                                ),
-                                child: Center(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const [
-                                      Icon(Icons.add_circle,
-                                          color: Colors.white, size: 28),
-                                      SizedBox(width: 10),
-                                      Text(
-                                        "Create Department",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
+              // Category Information Section
+              _buildSectionTitle("Category Information"),
+              const SizedBox(height: 16),
 
-                          // Bottom half - Manage Department
-                          Expanded(
-                            child: Material(
-                              color: Colors.blue[400],
-                              borderRadius: const BorderRadius.only(
-                                bottomLeft: Radius.circular(8),
-                                bottomRight: Radius.circular(8),
-                              ),
-                              child: InkWell(
-                                onTap: () {
-                                  // Navigate to Manage Department page
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          Managedepartmentpage(),
-                                    ),
-                                  );
-                                },
-                                borderRadius: const BorderRadius.only(
-                                  bottomLeft: Radius.circular(8),
-                                  bottomRight: Radius.circular(8),
-                                ),
-                                child: Center(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const [
-                                      Icon(Icons.edit,
-                                          color: Colors.white, size: 28),
-                                      SizedBox(width: 10),
-                                      Text(
-                                        "Manage Department",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    const SizedBox(height: 20),
-
-                    // Template Creator button
-                    ElevatedButton.icon(
-                      onPressed: () {},
-                      icon: const Icon(Icons.file_copy),
-                      label: const Text(
-                        "Template Creator",
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 16, horizontal: 24),
-                        backgroundColor: Colors.green,
-                      ),
-                    ),
-                  ],
-                ),
+              // Category Name
+              _buildTextField(
+                controller: _nameController,
+                label: "Category Name",
+                hint: "Enter category name",
+                icon: Icons.category,
+                isRequired: true,
               ),
-            ),
+              const SizedBox(height: 20),
 
-            // Right section with category buttons
-            Expanded(
-              flex: 2,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 16.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Category management button (split in two)
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.3),
-                            spreadRadius: 1,
-                            blurRadius: 5,
-                            offset: const Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                      height: 200,
-                      width: double.infinity,
-                      child: Column(
-                        children: [
-                          // Top half - Create Category
-                          Expanded(
-                            child: Material(
-                              color: Colors.amber[600],
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(8),
-                                topRight: Radius.circular(8),
-                              ),
-                              child: InkWell(
-                                onTap: () {},
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(8),
-                                  topRight: Radius.circular(8),
-                                ),
-                                child: Center(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const [
-                                      Icon(Icons.add_circle,
-                                          color: Colors.white, size: 28),
-                                      SizedBox(width: 10),
-                                      Text(
-                                        "Create Category",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-
-                          // Bottom half - Manage Category
-                          Expanded(
-                            child: Material(
-                              color: Colors.amber[400],
-                              borderRadius: const BorderRadius.only(
-                                bottomLeft: Radius.circular(8),
-                                bottomRight: Radius.circular(8),
-                              ),
-                              child: InkWell(
-                                onTap: () {},
-                                borderRadius: const BorderRadius.only(
-                                  bottomLeft: Radius.circular(8),
-                                  bottomRight: Radius.circular(8),
-                                ),
-                                child: Center(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const [
-                                      Icon(Icons.edit,
-                                          color: Colors.white, size: 28),
-                                      SizedBox(width: 10),
-                                      Text(
-                                        "Manage Category",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    const SizedBox(height: 20),
-
-                    // Compile button
-                    ElevatedButton.icon(
-                      onPressed: () {},
-                      icon: const Icon(Icons.play_arrow),
-                      label: const Text(
-                        "Compile",
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 16, horizontal: 24),
-                        backgroundColor: Colors.red[700],
-                      ),
-                    ),
-                  ],
-                ),
+              // Category Description
+              _buildTextField(
+                controller: _descriptionController,
+                label: "Category Description",
+                hint: "Enter details about the category",
+                icon: Icons.description,
+                maxLines: 3,
               ),
-            ),
-          ],
+              const SizedBox(height: 28),
+
+              // Vote Members Section
+              _buildSectionTitle("Vote Members"),
+              const SizedBox(height: 16),
+              
+              // Vote Member Selection
+              Row(
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey.shade400),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          value: _currentSelection,
+                          isExpanded: true,
+                          icon: const Icon(Icons.arrow_drop_down),
+                          style: const TextStyle(color: Colors.black87, fontSize: 16),
+                          hint: const Text("Select Vote Member"),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              _currentSelection = newValue!;
+                            });
+                          },
+                          items: _voteMembers
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Row(
+                                children: [
+                                  const Icon(Icons.person,
+                                      color: Colors.amber, size: 20),
+                                  const SizedBox(width: 12),
+                                  Text(value),
+                                ],
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    flex: 1,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (_currentSelection != "Select Member" && 
+                            !_selectedMembers.contains(_currentSelection)) {
+                          setState(() {
+                            _selectedMembers.add(_currentSelection);
+                            _currentSelection = "Select Member";
+                          });
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.amber[700],
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: const Text("Add"),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              
+              // Selected Members List
+              if (_selectedMembers.isNotEmpty) ...[
+                const Text(
+                  "Selected Members:",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey.shade300),
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.grey.shade100,
+                  ),
+                  child: Column(
+                    children: _selectedMembers.map((member) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.person, color: Colors.amber),
+                            const SizedBox(width: 12),
+                            Expanded(child: Text(member)),
+                            IconButton(
+                              icon: const Icon(Icons.remove_circle, color: Colors.red),
+                              onPressed: () {
+                                setState(() {
+                                  _selectedMembers.remove(member);
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ],
+              const SizedBox(height: 40),
+
+              // Action Buttons
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        side: BorderSide(color: Colors.amber.shade700),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: const Text(
+                        "Cancel",
+                        style: TextStyle(fontSize: 16, color: Colors.amber),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    flex: 2,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Validate and save category
+                        if (_validateForm()) {
+                          // Show success message
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Category created successfully"),
+                              backgroundColor: Colors.green,
+                            ),
+                          );
+                          // Return to previous screen
+                          Navigator.pop(context);
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.amber[700],
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: const Text(
+                        "Create Category",
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
+
+  // Helper method to build section titles
+  Widget _buildSectionTitle(String title) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: Colors.black87,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Container(
+          width: 50,
+          height: 3,
+          color: Colors.amber[700],
+        ),
+      ],
+    );
+  }
+
+  // Helper method to build text fields
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String label,
+    required String hint,
+    required IconData icon,
+    bool isRequired = false,
+    int maxLines = 1,
+    TextInputType keyboardType = TextInputType.text,
+    String? prefix,
+  }) {
+    return TextField(
+      controller: controller,
+      maxLines: maxLines,
+      keyboardType: keyboardType,
+      decoration: InputDecoration(
+        labelText: isRequired ? "$label *" : label,
+        hintText: hint,
+        prefixIcon: Icon(icon, color: Colors.amber[700]),
+        prefixText: prefix,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(color: Colors.grey.shade400),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(color: Colors.amber.shade700, width: 2),
+        ),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      ),
+    );
+  }
+
+  // Form validation
+  bool _validateForm() {
+    // Check required fields
+    if (_nameController.text.isEmpty) {
+      _showValidationError("Category name is required");
+      return false;
+    }
+
+    if (_selectedMembers.isEmpty) {
+      _showValidationError("Please add at least one vote member");
+      return false;
+    }
+
+    // All validations passed
+    return true;
+  }
+
+  // Show validation error
+  void _showValidationError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red,
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
 }
-
-

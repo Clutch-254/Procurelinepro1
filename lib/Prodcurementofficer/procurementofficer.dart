@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:procurelineapp/Prodcurementofficer/Createdepartmentpage.dart';
+import 'package:procurelineapp/Prodcurementofficer/Managecategory.dart';
 import 'package:procurelineapp/Prodcurementofficer/Managedepartment.dart';
-import 'package:procurelineapp/Prodcurementofficer/Createcategorypage.dart'; // Import the create category page
+import 'package:procurelineapp/Prodcurementofficer/Createcategorypage.dart';
+// Import the manage category page
 
 class Procurementofficer extends StatelessWidget {
   const Procurementofficer({super.key});
@@ -312,7 +314,15 @@ class Procurementofficer extends StatelessWidget {
                                 bottomRight: Radius.circular(8),
                               ),
                               child: InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  // Navigate to Manage Category page
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Managecategory(),
+                                    ),
+                                  );
+                                },
                                 borderRadius: const BorderRadius.only(
                                   bottomLeft: Radius.circular(8),
                                   bottomRight: Radius.circular(8),
