@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:procurelineapp/Prodcurementofficer/Createcategorypage.dart';
+// Import the Additem class - adjust the path as needed
+import 'package:procurelineapp/Prodcurementofficer/Additem.dart';
 
 class Managecategory extends StatefulWidget {
   const Managecategory({super.key});
@@ -208,12 +210,6 @@ class _ManagecategoryState extends State<Managecategory> {
                                     ),
                                   ),
                                   const SizedBox(height: 4),
-                                  Text(
-                                    "Budget: Ksh ${_formatCurrency(category['budget'])}",
-                                    style: TextStyle(
-                                      color: Colors.grey[600],
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
@@ -455,19 +451,7 @@ class _CategoryDetailsPageState extends State<CategoryDetailsPage> {
 
               const SizedBox(height: 32),
 
-              // Budget Information Section
-              _buildSectionTitle("Budget Information"),
               const SizedBox(height: 16),
-
-              // Category Budget
-              _buildInfoItem(
-                context,
-                "Annual Budget",
-                "Ksh ${_formatCurrency(widget.category['budget'])}",
-                Icons.account_balance_wallet,
-                valueColor: Colors.green[700],
-                valueFontWeight: FontWeight.bold,
-              ),
 
               const SizedBox(height: 40),
 
@@ -490,6 +474,30 @@ class _CategoryDetailsPageState extends State<CategoryDetailsPage> {
                     label: const Text("Edit Category"),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.amber[700],
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 12,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      // Navigate to add item page with required parameters
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Additem(
+                            categoryId: widget.category['code'],
+                            categoryName: widget.category['name'],
+                          ),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.add_shopping_cart),
+                    label: const Text("Add Item"),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green[600],
                       padding: const EdgeInsets.symmetric(
                         horizontal: 24,
                         vertical: 12,
@@ -661,6 +669,7 @@ class _EditCategoryPageState extends State<EditCategoryPage> {
     _codeController.dispose();
     _descriptionController.dispose();
     _budgetController.dispose();
+
     _editScrollController.dispose();
     super.dispose();
   }
@@ -768,22 +777,6 @@ class _EditCategoryPageState extends State<EditCategoryPage> {
                 hint: "Enter details about the category",
                 icon: Icons.description,
                 maxLines: 3,
-              ),
-              const SizedBox(height: 28),
-
-              // Budget Section
-              _buildSectionTitle("Budget Information"),
-              const SizedBox(height: 16),
-
-              // Category Budget
-              _buildTextField(
-                controller: _budgetController,
-                label: "Category Budget",
-                hint: "Enter annual budget allocation",
-                icon: Icons.account_balance_wallet,
-                isRequired: true,
-                keyboardType: TextInputType.number,
-                prefix: "Ksh",
               ),
               const SizedBox(height: 28),
 
@@ -994,3 +987,5 @@ class _EditCategoryPageState extends State<EditCategoryPage> {
     );
   }
 }
+
+// Remove the placeholder AddItemPage class as we're using the actual Additem class

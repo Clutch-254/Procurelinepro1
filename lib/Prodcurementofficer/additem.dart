@@ -1,5 +1,3 @@
-Procureline app
-
 import 'package:flutter/material.dart';
 
 class Additem extends StatefulWidget {
@@ -204,7 +202,6 @@ class _AdditemState extends State<Additem> {
                 icon: Icons.monetization_on,
                 isRequired: true,
                 keyboardType: TextInputType.number,
-                prefix: "Ksh ",
               ),
               const SizedBox(height: 28),
 
@@ -344,8 +341,20 @@ class _AdditemState extends State<Additem> {
       decoration: InputDecoration(
         labelText: isRequired ? "$label *" : label,
         hintText: hint,
-        prefixIcon: Icon(icon, color: Colors.green[600]),
-        prefixText: prefix,
+        prefixIcon: label == "Unit Price"
+            ? Container(
+                width: 24,
+                alignment: Alignment.center,
+                child: Text(
+                  "Ksh",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.green[600],
+                  ),
+                ),
+              )
+            : Icon(icon, color: Colors.green[600]),
+        prefixText: label == "Unit Price" ? " " : prefix,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: Colors.grey.shade400),

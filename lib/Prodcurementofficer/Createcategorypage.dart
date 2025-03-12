@@ -114,16 +114,6 @@ class _CreatecategorypageState extends State<Createcategorypage> {
               ),
               const SizedBox(height: 20),
 
-              // Category Budget
-              _buildTextField(
-                controller: _budgetController,
-                label: "Category Budget",
-                hint: "Enter budget amount",
-                icon: Icons.account_balance_wallet,
-                isRequired: true,
-                keyboardType: TextInputType.number,
-                prefix: "Ksh ",
-              ),
               const SizedBox(height: 28),
 
               // Vote Members Section
