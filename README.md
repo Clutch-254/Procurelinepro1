@@ -1,51 +1,19 @@
 Procureline app
 
 import 'package:flutter/material.dart';
-import 'package:procurelineapp/Createdepartmentpage.dart';
 
-class Managedepartmentpage extends StatefulWidget {
-  const Managedepartmentpage({super.key});
+import 'package:procurelineapp/Prodcurementofficer/Createdepartmentpage.dart';
+import 'package:procurelineapp/Prodcurementofficer/Managedepartment.dart';
 
-  @override
-  State<Managedepartmentpage> createState() => _ManagedepartmentpageState();
-}
-
-class _ManagedepartmentpageState extends State<Managedepartmentpage> {
-  // Sample list of departments
-  final List<Map<String, dynamic>> departments = [
-    {
-      'name': 'Computer Science',
-      'code': 'CS',
-      'head': 'Prof. John Smith',
-    },
-    {
-      'name': 'Engineering',
-      'code': 'ENG',
-      'head': 'Dr. Emily Johnson',
-    },
-    {
-      'name': 'Business Administration',
-      'code': 'BUS',
-      'head': 'Prof. Michael Brown',
-    },
-    {
-      'name': 'Medicine',
-      'code': 'MED',
-      'head': 'Dr. Sarah Wilson',
-    },
-    {
-      'name': 'Arts and Humanities',
-      'code': 'ART',
-      'head': 'Prof. David Thompson',
-    },
-  ];
+class Procurementofficer extends StatelessWidget {
+  const Procurementofficer({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Manage Departments",
+          "Procurement Officer",
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 22,
@@ -57,510 +25,340 @@ class _ManagedepartmentpageState extends State<Managedepartmentpage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
           children: [
-            // Search and filter section
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              decoration: BoxDecoration(
-                color: Colors.grey[100],
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintText: "Search departments...",
-                        border: InputBorder.none,
-                        icon: Icon(Icons.search, color: Colors.blue[700]),
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.filter_list, color: Colors.blue[700]),
-                    onPressed: () {
-                      // Filter functionality
-                    },
-                  ),
-                ],
-              ),
-            ),
-
-            const SizedBox(height: 20),
-
-            // Departments list
+            // Left sidebar with officer name and buttons
             Expanded(
-              child: ListView.builder(
-                itemCount: departments.length,
-                itemBuilder: (context, index) {
-                  final department = departments[index];
-                  return Card(
-                    margin: const EdgeInsets.only(bottom: 12),
-                    elevation: 2,
+              flex: 1,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // Officer name card
+                  Card(
+                    elevation: 3,
                     child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        children: [
-                          // Department icon
-                          Container(
-                            width: 50,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              color: Colors.blue[100],
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Center(
-                              child: Text(
-                                department['code'],
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.blue[800],
-                                  fontSize: 18,
-                                ),
-                              ),
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        children: const [
+                          CircleAvatar(
+                            radius: 40,
+                            backgroundColor: Colors.grey,
+                            child: Icon(Icons.person,
+                                size: 50, color: Colors.white),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            "John Doe",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
                             ),
                           ),
-
-                          const SizedBox(width: 16),
-
-                          // Department details
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  department['name'],
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  "Head: ${department['head']}",
-                                  style: TextStyle(
-                                    color: Colors.grey[600],
-                                  ),
-                                ),
-                              ],
+                          Text(
+                            "Senior Procurement Officer",
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14,
                             ),
-                          ),
-
-                          // Action buttons
-                          Row(
-                            children: [
-                              IconButton(
-                                icon:
-                                    const Icon(Icons.edit, color: Colors.blue),
-                                onPressed: () {
-                                  // Edit department
-                                },
-                              ),
-                              IconButton(
-                                icon:
-                                    const Icon(Icons.delete, color: Colors.red),
-                                onPressed: () {
-                                  // Delete department
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) => AlertDialog(
-                                      title: const Text("Delete Department"),
-                                      content: Text(
-                                        "Are you sure you want to delete ${department['name']}?",
-                                      ),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: const Text("Cancel"),
-                                        ),
-                                        TextButton(
-                                          onPressed: () {
-                                            // Delete logic here
-                                            Navigator.pop(context);
-                                          },
-                                          child: const Text(
-                                            "Delete",
-                                            style: TextStyle(color: Colors.red),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
                           ),
                         ],
                       ),
                     ),
-                  );
-                },
+                  ),
+                  const SizedBox(height: 20),
+
+                  // Settings button
+                  ElevatedButton.icon(
+                    onPressed: () {},
+                    icon: const Icon(Icons.settings),
+                    label: const Text("Settings"),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.purple,
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                    ),
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  // Logout button
+                  OutlinedButton.icon(
+                    onPressed: () {},
+                    icon: const Icon(Icons.logout),
+                    label: const Text("Log Out"),
+                    style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                    ),
+                  ),
+
+                  const Spacer(),
+                ],
+              ),
+            ),
+
+            // Center section with department buttons
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Department management button (split in two)
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.3),
+                            spreadRadius: 1,
+                            blurRadius: 5,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      height: 200,
+                      width: double.infinity,
+                      child: Column(
+                        children: [
+                          // Top half - Create Department
+                          Expanded(
+                            child: Material(
+                              color: Colors.blue[600],
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(8),
+                                topRight: Radius.circular(8),
+                              ),
+                              child: InkWell(
+                                onTap: () {
+                                  // Navigate to Create Department page
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const Createdepartmentpage(),
+                                    ),
+                                  );
+                                },
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(8),
+                                  topRight: Radius.circular(8),
+                                ),
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const [
+                                      Icon(Icons.add_circle,
+                                          color: Colors.white, size: 28),
+                                      SizedBox(width: 10),
+                                      Text(
+                                        "Create Department",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          // Bottom half - Manage Department
+                          Expanded(
+                            child: Material(
+                              color: Colors.blue[400],
+                              borderRadius: const BorderRadius.only(
+                                bottomLeft: Radius.circular(8),
+                                bottomRight: Radius.circular(8),
+                              ),
+                              child: InkWell(
+                                onTap: () {
+                                  // Navigate to Manage Department page
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          Managedepartmentpage(),
+                                    ),
+                                  );
+                                },
+                                borderRadius: const BorderRadius.only(
+                                  bottomLeft: Radius.circular(8),
+                                  bottomRight: Radius.circular(8),
+                                ),
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const [
+                                      Icon(Icons.edit,
+                                          color: Colors.white, size: 28),
+                                      SizedBox(width: 10),
+                                      Text(
+                                        "Manage Department",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    // Template Creator button
+                    ElevatedButton.icon(
+                      onPressed: () {},
+                      icon: const Icon(Icons.file_copy),
+                      label: const Text(
+                        "Template Creator",
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 16, horizontal: 24),
+                        backgroundColor: Colors.green,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            // Right section with category buttons
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 16.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Category management button (split in two)
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.3),
+                            spreadRadius: 1,
+                            blurRadius: 5,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      height: 200,
+                      width: double.infinity,
+                      child: Column(
+                        children: [
+                          // Top half - Create Category
+                          Expanded(
+                            child: Material(
+                              color: Colors.amber[600],
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(8),
+                                topRight: Radius.circular(8),
+                              ),
+                              child: InkWell(
+                                onTap: () {},
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(8),
+                                  topRight: Radius.circular(8),
+                                ),
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const [
+                                      Icon(Icons.add_circle,
+                                          color: Colors.white, size: 28),
+                                      SizedBox(width: 10),
+                                      Text(
+                                        "Create Category",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          // Bottom half - Manage Category
+                          Expanded(
+                            child: Material(
+                              color: Colors.amber[400],
+                              borderRadius: const BorderRadius.only(
+                                bottomLeft: Radius.circular(8),
+                                bottomRight: Radius.circular(8),
+                              ),
+                              child: InkWell(
+                                onTap: () {},
+                                borderRadius: const BorderRadius.only(
+                                  bottomLeft: Radius.circular(8),
+                                  bottomRight: Radius.circular(8),
+                                ),
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const [
+                                      Icon(Icons.edit,
+                                          color: Colors.white, size: 28),
+                                      SizedBox(width: 10),
+                                      Text(
+                                        "Manage Category",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    // Compile button
+                    ElevatedButton.icon(
+                      onPressed: () {},
+                      icon: const Icon(Icons.play_arrow),
+                      label: const Text(
+                        "Compile",
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 16, horizontal: 24),
+                        backgroundColor: Colors.red[700],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Navigate to create department
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const Createdepartmentpage(),
-            ),
-          );
-        },
-        backgroundColor: Colors.blue[700],
-        child: const Icon(Icons.add),
-      ),
     );
   }
 }
 
 
-import 'package:flutter/material.dart';
-
-class Createdepartmentpage extends StatefulWidget {
-  const Createdepartmentpage({super.key});
-
-  @override
-  State<Createdepartmentpage> createState() => _CreatedepartmentpageState();
-}
-
-class _CreatedepartmentpageState extends State<Createdepartmentpage> {
-  // Controllers for text fields
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _codeController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _budgetController = TextEditingController();
-
-  // List of dummy department users for dropdown
-  final List<String> _departmentUsers = [
-    "Select User",
-    "James Olumbe",
-    "Sarah Kerubo",
-    "Michael Nyangumi",
-    "Emma Nyakio",
-    "Robert Mwangi"
-  ];
-
-  String _selectedUser = "Select User";
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _codeController.dispose();
-    _descriptionController.dispose();
-    _budgetController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Create Department",
-          style: TextStyle(fontWeight: FontWeight.w600),
-        ),
-        backgroundColor: Colors.blue[700],
-        elevation: 2,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.help_outline),
-            onPressed: () {
-              // Show help information
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text("Help information for creating departments"),
-                  duration: Duration(seconds: 3),
-                ),
-              );
-            },
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Title with divider
-              Row(
-                children: [
-                  const Icon(Icons.business, size: 28, color: Colors.blue),
-                  const SizedBox(width: 12),
-                  const Text(
-                    "Create New Department",
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                    ),
-                  ),
-                  const Expanded(
-                    child: Divider(
-                      indent: 12,
-                      thickness: 1,
-                      color: Colors.black45,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 28),
-
-              // General Information Section
-              _buildSectionTitle("General Information"),
-              const SizedBox(height: 16),
-
-              // Department Name
-              _buildTextField(
-                controller: _nameController,
-                label: "Department Name",
-                hint: "Enter department name",
-                icon: Icons.business,
-                isRequired: true,
-              ),
-              const SizedBox(height: 20),
-
-              // Department Code
-              _buildTextField(
-                controller: _codeController,
-                label: "Department Code",
-                hint: "Enter unique identifier code",
-                icon: Icons.code,
-                isRequired: true,
-              ),
-              const SizedBox(height: 20),
-
-              // Department Description
-              _buildTextField(
-                controller: _descriptionController,
-                label: "Department Description",
-                hint: "Enter details about the department",
-                icon: Icons.description,
-                maxLines: 3,
-              ),
-              const SizedBox(height: 28),
-
-              // Budget Section
-              _buildSectionTitle("Budget Information"),
-              const SizedBox(height: 16),
-
-              // Department Budget
-              _buildTextField(
-                controller: _budgetController,
-                label: "Department Budget",
-                hint: "Enter annual budget allocation",
-                icon: Icons.account_balance_wallet,
-                isRequired: true,
-                keyboardType: TextInputType.number,
-                prefix: "\Ksh",
-              ),
-              const SizedBox(height: 28),
-
-              // User Assignment Section
-              _buildSectionTitle("Department User Assignment"),
-              const SizedBox(height: 16),
-
-              // Department User Dropdown
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey.shade400),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                    value: _selectedUser,
-                    isExpanded: true,
-                    icon: const Icon(Icons.arrow_drop_down),
-                    style: const TextStyle(color: Colors.black87, fontSize: 16),
-                    hint: const Text("Select Department User"),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        _selectedUser = newValue!;
-                      });
-                    },
-                    items: _departmentUsers
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Row(
-                          children: [
-                            const Icon(Icons.person,
-                                color: Colors.blue, size: 20),
-                            const SizedBox(width: 12),
-                            Text(value),
-                          ],
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 40),
-
-              // Action Buttons
-              Row(
-                children: [
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      style: OutlinedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        side: BorderSide(color: Colors.blue.shade700),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      child: const Text(
-                        "Cancel",
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    flex: 2,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Validate and save department
-                        if (_validateForm()) {
-                          // Show success message
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text("Department created successfully"),
-                              backgroundColor: Colors.green,
-                            ),
-                          );
-                          // Return to previous screen
-                          Navigator.pop(context);
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue[700],
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      child: const Text(
-                        "Create Department",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  // Helper method to build section titles
-  Widget _buildSectionTitle(String title) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-            color: Colors.black87,
-          ),
-        ),
-        const SizedBox(height: 4),
-        Container(
-          width: 50,
-          height: 3,
-          color: Colors.blue[700],
-        ),
-      ],
-    );
-  }
-
-  // Helper method to build text fields
-  Widget _buildTextField({
-    required TextEditingController controller,
-    required String label,
-    required String hint,
-    required IconData icon,
-    bool isRequired = false,
-    int maxLines = 1,
-    TextInputType keyboardType = TextInputType.text,
-    String? prefix,
-  }) {
-    return TextField(
-      controller: controller,
-      maxLines: maxLines,
-      keyboardType: keyboardType,
-      decoration: InputDecoration(
-        labelText: isRequired ? "$label *" : label,
-        hintText: hint,
-        prefixIcon: Icon(icon, color: Colors.blue[700]),
-        prefixText: prefix,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: Colors.grey.shade400),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: Colors.blue.shade700, width: 2),
-        ),
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-      ),
-    );
-  }
-
-  // Form validation
-  bool _validateForm() {
-    // Check required fields
-    if (_nameController.text.isEmpty) {
-      _showValidationError("Department name is required");
-      return false;
-    }
-
-    if (_codeController.text.isEmpty) {
-      _showValidationError("Department code is required");
-      return false;
-    }
-
-    if (_budgetController.text.isEmpty) {
-      _showValidationError("Department budget is required");
-      return false;
-    }
-
-    if (_selectedUser == "Select User") {
-      _showValidationError("Please select a department user");
-      return false;
-    }
-
-    // All validations passed
-    return true;
-  }
-
-  // Show validation error
-  void _showValidationError(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: Colors.red,
-        duration: const Duration(seconds: 2),
-      ),
-    );
-  }
-}
