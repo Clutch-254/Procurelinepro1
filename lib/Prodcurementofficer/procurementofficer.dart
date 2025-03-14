@@ -4,6 +4,7 @@ import 'package:procurelineapp/Prodcurementofficer/Createdepartmentpage.dart';
 import 'package:procurelineapp/Prodcurementofficer/managecategory.dart';
 import 'package:procurelineapp/Prodcurementofficer/Managedepartment.dart';
 import 'package:procurelineapp/Prodcurementofficer/Createcategorypage.dart';
+import 'package:procurelineapp/Prodcurementofficer/templatepage.dart';
 // Import the manage category page
 
 class Procurementofficer extends StatelessWidget {
@@ -218,7 +219,14 @@ class Procurementofficer extends StatelessWidget {
 
                     // Template Creator button
                     ElevatedButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                         Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Templatepage(),
+                                    ),
+                                  );
+                      },
                       icon: const Icon(Icons.file_copy),
                       label: const Text(
                         "Template Creator",
