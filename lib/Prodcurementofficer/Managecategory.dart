@@ -454,6 +454,7 @@ class _CategoryDetailsPageState extends State<CategoryDetailsPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  // Edit Category Button
                   ElevatedButton.icon(
                     onPressed: () {
                       Navigator.push(
@@ -473,7 +474,33 @@ class _CategoryDetailsPageState extends State<CategoryDetailsPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 16),
+                  const SizedBox(width: 16), // Spacing between buttons
+
+                  // Add Item Button
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      // Add functionality to add a new item
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content:
+                              Text("Add Item feature will be implemented soon"),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.add),
+                    label: const Text("Add Item"),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor:
+                          Colors.green, // Green color for the "Add Item" button
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 12,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 16), // Spacing between buttons
+
+                  // Back to List Button
                   OutlinedButton.icon(
                     onPressed: () {
                       Navigator.pop(context);
