@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:procurelineapp/Prodcurementofficer/Createcategorypage.dart';
-import 'package:procurelineapp/Prodcurementofficer/Additem.dart';
+import 'package:procurelineapp/Prodcurementofficer/additem.dart';
 import 'package:procurelineapp/Prodcurementofficer/editcategory.dart';
 
 class Managecategory extends StatefulWidget {
@@ -11,84 +11,47 @@ class Managecategory extends StatefulWidget {
 }
 
 class _ManagecategoryState extends State<Managecategory> {
+  // Controller for the scrollable list
   final ScrollController _scrollController = ScrollController();
 
+  // Sample list of categories
   final List<Map<String, dynamic>> categories = [
     {
       'name': 'Office Supplies',
       'code': 'OS',
       'description': 'General office supplies like stationery and equipment',
-      'budget': '1500000',
-      'userInCharge': 'James Olumbe',
-      'items': [
-        {'name': 'Pens', 'quantity': 100, 'price': 10.0},
-        {'name': 'Pencils', 'quantity': 50, 'price': 5.0},
-        {'name': 'Notebooks', 'quantity': 30, 'price': 3.0},
-        {'name': 'Staplers', 'quantity': 20, 'price': 15.0},
-        {'name': 'Markers', 'quantity': 40, 'price': 2.0},
-      ]
+      'userInCharge': 'James Olumbe'
     },
     {
       'name': 'IT Equipment',
       'code': 'ITE',
       'description': 'Computing and IT related equipment',
-      'budget': '3000000',
-      'userInCharge': 'Sarah Kerubo',
-      'items': [
-        {'name': 'Laptops', 'quantity': 20, 'price': 1000.0},
-        {'name': 'Desktops', 'quantity': 30, 'price': 800.0},
-        {'name': 'Printers', 'quantity': 10, 'price': 200.0},
-        {'name': 'Monitors', 'quantity': 15, 'price': 150.0},
-        {'name': 'Routers', 'quantity': 25, 'price': 70.0},
-      ]
+      'userInCharge': 'Sarah Kerubo'
     },
     {
       'name': 'Furniture',
       'code': 'FUR',
       'description': 'Office furniture and fittings',
-      'budget': '2500000',
-      'userInCharge': 'Michael Nyangumi',
-      'items': [
-        {'name': 'Chairs', 'quantity': 50, 'price': 50.0},
-        {'name': 'Desks', 'quantity': 20, 'price': 100.0},
-        {'name': 'Filing Cabinets', 'quantity': 15, 'price': 200.0},
-        {'name': 'Conference Tables', 'quantity': 5, 'price': 500.0},
-        {'name': 'Sofas', 'quantity': 10, 'price': 300.0},
-      ]
+      'userInCharge': 'Michael Nyangumi'
     },
     {
       'name': 'Laboratory Equipment',
       'code': 'LAB',
       'description': 'Scientific laboratory apparatus and chemicals',
-      'budget': '4500000',
-      'userInCharge': 'Emma Nyakio',
-      'items': [
-        {'name': 'Microscopes', 'quantity': 10, 'price': 500.0},
-        {'name': 'Test Tubes', 'quantity': 100, 'price': 10.0},
-        {'name': 'Beakers', 'quantity': 50, 'price': 5.0},
-        {'name': 'Petri Dishes', 'quantity': 200, 'price': 2.0},
-        {'name': 'Bunsen Burners', 'quantity': 20, 'price': 30.0},
-      ]
+      'userInCharge': 'Emma Nyakio'
     },
     {
       'name': 'Books and Publications',
       'code': 'BP',
       'description': 'Academic books, journals and publications',
-      'budget': '1200000',
-      'userInCharge': 'Robert Mwangi',
-      'items': [
-        {'name': 'Textbooks', 'quantity': 50, 'price': 20.0},
-        {'name': 'Journals', 'quantity': 20, 'price': 10.0},
-        {'name': 'Research Papers', 'quantity': 15, 'price': 15.0},
-        {'name': 'Magazines', 'quantity': 50, 'price': 5.0},
-        {'name': 'E-books', 'quantity': 100, 'price': 0.99},
-      ]
+      'userInCharge': 'Robert Mwangi'
     },
   ];
 
   @override
   void initState() {
     super.initState();
+    // Optional: You can add a listener to the scroll controller for additional behaviors
     _scrollController.addListener(_scrollListener);
   }
 
@@ -99,19 +62,37 @@ class _ManagecategoryState extends State<Managecategory> {
     super.dispose();
   }
 
-  void _scrollListener() {}
+  // Scroll listener for potential future use
+  void _scrollListener() {
+    // You can implement scroll events here, like loading more data when reaching bottom
+  }
 
+  // Function to scroll to a specific category index
   void scrollToIndex(int index) {
     if (index < 0 || index >= categories.length) return;
 
-    final double itemHeight = 110;
+    // Calculate position to scroll to
+    final double itemHeight = 110; // Approximate height of each card item
     final double offset = index * itemHeight;
 
+    // Animate to that position
     _scrollController.animateTo(
       offset,
       duration: const Duration(milliseconds: 500),
       curve: Curves.easeInOut,
     );
+  }
+
+  // Show edit dialog instead of navigating to edit page
+  void _showEditDialog(Map<String, dynamic> category) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+            "Edit feature will be implemented soon for: ${category['name']}"),
+        duration: const Duration(seconds: 2),
+      ),
+    );
+    // You could implement a dialog here if you want to show something to the user
   }
 
   @override
@@ -129,9 +110,11 @@ class _ManagecategoryState extends State<Managecategory> {
         backgroundColor: Colors.amber[700],
         elevation: 4,
         actions: [
+          // Added button to scroll down to a sample category (for demonstration)
           IconButton(
             icon: const Icon(Icons.arrow_downward),
             onPressed: () {
+              // Scroll to the third category in the list
               scrollToIndex(2);
             },
             tooltip: "Scroll to Furniture category",
@@ -143,6 +126,7 @@ class _ManagecategoryState extends State<Managecategory> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Search and filter section
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
@@ -162,15 +146,20 @@ class _ManagecategoryState extends State<Managecategory> {
                   ),
                   IconButton(
                     icon: Icon(Icons.filter_list, color: Colors.amber[700]),
-                    onPressed: () {},
+                    onPressed: () {
+                      // Filter functionality
+                    },
                   ),
                 ],
               ),
             ),
+
             const SizedBox(height: 20),
+
+            // Categories list
             Expanded(
               child: ListView.builder(
-                controller: _scrollController,
+                controller: _scrollController, // Add the scroll controller
                 itemCount: categories.length,
                 itemBuilder: (context, index) {
                   final category = categories[index];
@@ -179,11 +168,13 @@ class _ManagecategoryState extends State<Managecategory> {
                     elevation: 2,
                     child: InkWell(
                       onTap: () {
+                        // Navigate to category details page when tapped
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => CategoryDetailsPage(
                               category: category,
+                              onEditPressed: () => _showEditDialog(category),
                             ),
                           ),
                         );
@@ -192,6 +183,7 @@ class _ManagecategoryState extends State<Managecategory> {
                         padding: const EdgeInsets.all(16.0),
                         child: Row(
                           children: [
+                            // Category icon
                             Container(
                               width: 50,
                               height: 50,
@@ -210,7 +202,10 @@ class _ManagecategoryState extends State<Managecategory> {
                                 ),
                               ),
                             ),
+
                             const SizedBox(width: 16),
+
+                            // Category details
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -222,10 +217,11 @@ class _ManagecategoryState extends State<Managecategory> {
                                       fontSize: 18,
                                     ),
                                   ),
-                                  const SizedBox(height: 4),
                                 ],
                               ),
                             ),
+
+                            // Action buttons
                             Row(
                               children: [
                                 IconButton(
@@ -235,9 +231,8 @@ class _ManagecategoryState extends State<Managecategory> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => EditCategoryPage(
-                                          category: category,
-                                        ),
+                                        builder: (context) =>
+                                            const EditCategoryPage(),
                                       ),
                                     );
                                   },
@@ -246,6 +241,7 @@ class _ManagecategoryState extends State<Managecategory> {
                                   icon: const Icon(Icons.delete,
                                       color: Colors.red),
                                   onPressed: () {
+                                    // Delete category
                                     showDialog(
                                       context: context,
                                       builder: (context) => AlertDialog(
@@ -262,6 +258,7 @@ class _ManagecategoryState extends State<Managecategory> {
                                           ),
                                           TextButton(
                                             onPressed: () {
+                                              // Delete logic here
                                               Navigator.pop(context);
                                             },
                                             child: const Text(
@@ -291,8 +288,10 @@ class _ManagecategoryState extends State<Managecategory> {
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
+          // Added scroll down button
           FloatingActionButton(
             onPressed: () {
+              // Scroll to bottom
               _scrollController.animateTo(
                 _scrollController.position.maxScrollExtent,
                 duration: const Duration(milliseconds: 800),
@@ -307,6 +306,7 @@ class _ManagecategoryState extends State<Managecategory> {
           const SizedBox(height: 10),
           FloatingActionButton(
             onPressed: () {
+              // Navigate to create category page (updated from pushNamed to direct push)
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -322,20 +322,17 @@ class _ManagecategoryState extends State<Managecategory> {
       ),
     );
   }
-
-  String _formatCurrency(String amount) {
-    final number = double.tryParse(amount) ?? 0;
-    return number.toStringAsFixed(2).replaceAllMapped(
-        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},');
-  }
 }
 
+// Class for read-only category details
 class CategoryDetailsPage extends StatefulWidget {
   final Map<String, dynamic> category;
+  final Function onEditPressed;
 
   const CategoryDetailsPage({
     Key? key,
     required this.category,
+    required this.onEditPressed,
   }) : super(key: key);
 
   @override
@@ -343,8 +340,8 @@ class CategoryDetailsPage extends StatefulWidget {
 }
 
 class _CategoryDetailsPageState extends State<CategoryDetailsPage> {
+  // Scroll controller for details page
   final ScrollController _detailsScrollController = ScrollController();
-  bool _showItems = false;
 
   @override
   void dispose() {
@@ -352,6 +349,7 @@ class _CategoryDetailsPageState extends State<CategoryDetailsPage> {
     super.dispose();
   }
 
+  // Function to scroll down on the details page
   void _scrollDown() {
     _detailsScrollController.animateTo(
       _detailsScrollController.position.maxScrollExtent,
@@ -371,6 +369,7 @@ class _CategoryDetailsPageState extends State<CategoryDetailsPage> {
         backgroundColor: Colors.amber[700],
         elevation: 2,
         actions: [
+          // Add scroll down button to app bar
           IconButton(
             icon: const Icon(Icons.keyboard_arrow_down),
             onPressed: _scrollDown,
@@ -385,6 +384,7 @@ class _CategoryDetailsPageState extends State<CategoryDetailsPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Category header with icon
               Row(
                 children: [
                   Container(
@@ -430,52 +430,38 @@ class _CategoryDetailsPageState extends State<CategoryDetailsPage> {
                   ),
                 ],
               ),
+
               const SizedBox(height: 32),
+
+              // Category Information Section
               _buildSectionTitle("Category Information"),
               const SizedBox(height: 16),
+
+              // Category Description
               _buildInfoItem(context, "Description",
                   widget.category['description'], Icons.description),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    _showItems = !_showItems;
-                  });
-                },
-                child: Text(
-                  _showItems
-                      ? "Hide Category Items (${widget.category['items'].length})"
-                      : "Show Category Items (${widget.category['items'].length})",
-                ),
-              ),
-              _showItems
-                  ? Column(
-                      children: widget.category['items'].map<Widget>((item) {
-                        return ListTile(
-                          title: Text(item['name']),
-                          subtitle: Text('Quantity: ${item['quantity']}'),
-                        );
-                      }).toList(),
-                    )
-                  : const SizedBox(),
-              const SizedBox(height: 40),
+              const Divider(height: 24),
+
+              // User in Charge
               _buildInfoItem(
                   context,
                   "User in Charge",
                   widget.category['userInCharge'],
                   Icons.supervised_user_circle),
+
               const SizedBox(height: 40),
+
+              // Action Buttons
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  // Edit Category Button
                   ElevatedButton.icon(
                     onPressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => EditCategoryPage(
-                            category: widget.category,
-                          ),
+                          builder: (context) => const EditCategoryPage(),
                         ),
                       );
                     },
@@ -489,30 +475,32 @@ class _CategoryDetailsPageState extends State<CategoryDetailsPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 16),
+                  const SizedBox(width: 16), // Spacing between buttons
+
+                  // Add Item Button
                   ElevatedButton.icon(
                     onPressed: () {
                       Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Additem(
-                            categoryId: widget.category['code'],
-                            categoryName: widget.category['name'],
-                          ),
-                        ),
-                      );
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Additem(categoryName: '',),
+                                    ),
+                                  );
                     },
-                    icon: const Icon(Icons.add_shopping_cart),
+                    icon: const Icon(Icons.add),
                     label: const Text("Add Item"),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green[600],
+                      backgroundColor:
+                          Colors.green, // Green color for the "Add Item" button
                       padding: const EdgeInsets.symmetric(
                         horizontal: 24,
                         vertical: 12,
                       ),
                     ),
                   ),
-                  const SizedBox(width: 16),
+                  const SizedBox(width: 16), // Spacing between buttons
+
+                  // Back to List Button
                   OutlinedButton.icon(
                     onPressed: () {
                       Navigator.pop(context);
@@ -532,6 +520,7 @@ class _CategoryDetailsPageState extends State<CategoryDetailsPage> {
           ),
         ),
       ),
+      // Add floating action button for scrolling down
       floatingActionButton: FloatingActionButton(
         onPressed: _scrollDown,
         mini: true,
@@ -541,6 +530,7 @@ class _CategoryDetailsPageState extends State<CategoryDetailsPage> {
     );
   }
 
+  // Helper method to build section titles
   Widget _buildSectionTitle(String title) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -563,6 +553,7 @@ class _CategoryDetailsPageState extends State<CategoryDetailsPage> {
     );
   }
 
+  // Helper method to build information items
   Widget _buildInfoItem(
     BuildContext context,
     String label,

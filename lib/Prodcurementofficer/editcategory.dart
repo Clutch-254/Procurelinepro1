@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:procurelineapp/Prodcurementofficer/additem.dart';
 
 class EditCategoryPage extends StatefulWidget {
   const EditCategoryPage({super.key});
@@ -328,8 +329,14 @@ class _EditCategoryPageState extends State<EditCategoryPage> {
     return Center(
       child: ElevatedButton(
         onPressed: () {
-          // Add functionality to add a new item
-          _showAddItemDialog();
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Additem(
+                categoryName: '',
+              ),
+            ),
+          );
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.green, // Green color

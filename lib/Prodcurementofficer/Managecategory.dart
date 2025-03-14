@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:procurelineapp/Prodcurementofficer/Createcategorypage.dart';
+import 'package:procurelineapp/Prodcurementofficer/additem.dart';
 import 'package:procurelineapp/Prodcurementofficer/editcategory.dart';
 
 class Managecategory extends StatefulWidget {
@@ -19,31 +20,36 @@ class _ManagecategoryState extends State<Managecategory> {
       'name': 'Office Supplies',
       'code': 'OS',
       'description': 'General office supplies like stationery and equipment',
-      'userInCharge': 'James Olumbe'
+      'userInCharge': 'James Olumbe',
+      'items': ['Pens', 'Notebooks', 'Staplers', 'Paper Clips']
     },
     {
       'name': 'IT Equipment',
       'code': 'ITE',
       'description': 'Computing and IT related equipment',
-      'userInCharge': 'Sarah Kerubo'
+      'userInCharge': 'Sarah Kerubo',
+      'items': ['Laptops', 'Monitors', 'Keyboards', 'Mice']
     },
     {
       'name': 'Furniture',
       'code': 'FUR',
       'description': 'Office furniture and fittings',
-      'userInCharge': 'Michael Nyangumi'
+      'userInCharge': 'Michael Nyangumi',
+      'items': ['Desks', 'Chairs', 'Cabinets', 'Tables']
     },
     {
       'name': 'Laboratory Equipment',
       'code': 'LAB',
       'description': 'Scientific laboratory apparatus and chemicals',
-      'userInCharge': 'Emma Nyakio'
+      'userInCharge': 'Emma Nyakio',
+      'items': ['Microscopes', 'Beakers', 'Test Tubes', 'Bunsen Burners']
     },
     {
       'name': 'Books and Publications',
       'code': 'BP',
       'description': 'Academic books, journals and publications',
-      'userInCharge': 'Robert Mwangi'
+      'userInCharge': 'Robert Mwangi',
+      'items': ['Textbooks', 'Journals', 'Magazines', 'Research Papers']
     },
   ];
 
@@ -441,6 +447,13 @@ class _CategoryDetailsPageState extends State<CategoryDetailsPage> {
                   widget.category['description'], Icons.description),
               const Divider(height: 24),
 
+              // Items in Category
+              _buildSectionTitle("Items in Category"),
+              const SizedBox(height: 8),
+              _buildItemsList(widget.category['items']),
+
+              const Divider(height: 24),
+
               // User in Charge
               _buildInfoItem(
                   context,
@@ -479,11 +492,11 @@ class _CategoryDetailsPageState extends State<CategoryDetailsPage> {
                   // Add Item Button
                   ElevatedButton.icon(
                     onPressed: () {
-                      // Add functionality to add a new item
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content:
-                              Text("Add Item feature will be implemented soon"),
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              Additem(categoryName: widget.category['name']),
                         ),
                       );
                     },
@@ -598,6 +611,24 @@ class _CategoryDetailsPageState extends State<CategoryDetailsPage> {
           ),
         ],
       ),
+    );
+  }
+
+  // Helper method to build the list of items
+  Widget _buildItemsList(List<String> items) {
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: items.length,
+      itemBuilder: (context, index) {
+        return ListTile(
+          leading: const Icon(Icons.circle, size: 8, color: Colors.amber),
+          title: Text(
+            items[index],
+            style: const TextStyle(fontSize: 16),
+          ),
+        );
+      },
     );
   }
 }
