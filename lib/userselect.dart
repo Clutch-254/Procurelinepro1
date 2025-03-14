@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:procurelineapp/Departmentaluser.dart';
 import 'package:procurelineapp/Prodcurementofficer/procurementofficer.dart';
 
-
 class RoleSelectionPage extends StatelessWidget {
   const RoleSelectionPage({Key? key}) : super(key: key);
 
